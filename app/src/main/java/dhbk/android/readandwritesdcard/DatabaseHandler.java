@@ -2,6 +2,7 @@ package dhbk.android.readandwritesdcard;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -46,4 +47,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_CONTACTS, null, values);
         db.close();
     }
+
+    // getPerson
+    public Person getContact(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID, KEY_NAME, KEY_EMAIL}, KEY_ID
+                + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Person contact = new Person(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2));
+
+        // return contact
+        return contact;
+    }
+
+
 }
