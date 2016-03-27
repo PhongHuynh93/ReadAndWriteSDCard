@@ -92,5 +92,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-
+    // delete 1 contact
 }
