@@ -1,5 +1,6 @@
 package dhbk.android.readandwritesdcard;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -58,5 +59,10 @@ public class MainActivity extends AppCompatActivity {
         TextView show = (TextView) findViewById(R.id.txtshow);
         show.setText(stringBuilder.toString());
 
+    }
+
+    public void showDatabase(View view) {
+        Intent intent = new Intent(this, PersonActivity.class);
+        startActivity(intent);
     }
 }
