@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHandler(this);
     }
 
 
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         EditText pwd = (EditText) findViewById(R.id.txtemail);
 
         File myDir = new File("/sdcard/postion");
-        Toast.makeText(MainActivity.this, "Duong dan den file: " + myDir.getAbsolutePath(), Toast.LENGTH_LONG).show();
         myDir.mkdirs();
         FileWriter out = new FileWriter(new File(myDir, "saved.txt"), true);
 
