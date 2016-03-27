@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         out.write(name.getText().toString() + "\n");
         out.write(pwd.getText().toString() + "\n");
         out.close();
+
+        // write data to db
+        saveToDB(name.getText().toString(), pwd.getText().toString());
+        name.setText("");
+        pwd.setText("");
     }
 
     public void readData(View view) throws IOException {
