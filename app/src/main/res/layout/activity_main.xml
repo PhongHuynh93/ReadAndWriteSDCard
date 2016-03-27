@@ -49,6 +49,12 @@
         android:onClick="readData"
         android:text="Read"/>
 
+    <Button
+        android:id="@+id/btndatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Database"/>
+
     <TextView
         android:id="@+id/txtshow"
         android:layout_width="match_parent"

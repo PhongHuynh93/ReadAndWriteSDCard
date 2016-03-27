@@ -8,7 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         EditText pwd = (EditText) findViewById(R.id.txtemail);
 
         File myDir = new File("/sdcard/postion");
+        Toast.makeText(MainActivity.this, "Duong dan den file: " + myDir.getAbsolutePath(), Toast.LENGTH_LONG).show();
         myDir.mkdirs();
         FileWriter out = new FileWriter(new File(myDir, "saved.txt"), true);
 
@@ -34,6 +38,25 @@ public class MainActivity extends AppCompatActivity {
         out.close();
     }
 
-    public void readData(View view) {
+    public void readData(View view) throws IOException {
+        BufferedReader in = null;
+        File myDir = new File("/sdcard/postion");
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        try {
+            in = new BufferedReader(new FileReader(new File(myDir, "saved.txt")));
+            while ((line = in.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+            in.close();
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        TextView show = (TextView) findViewById(R.id.txtshow);
+        show.setText(stringBuilder.toString());
+
     }
 }
