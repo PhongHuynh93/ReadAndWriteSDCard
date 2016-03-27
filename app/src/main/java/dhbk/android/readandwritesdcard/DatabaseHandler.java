@@ -26,10 +26,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // create table
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_EMAIL + " TEXT" + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_NAME + " TEXT,"
+                + KEY_EMAIL + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
-
     }
 
     @Override
@@ -52,26 +54,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // getPerson
-    public Person getContact(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID, KEY_NAME, KEY_EMAIL}, KEY_ID
-                + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        Person contact = new Person(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
-
-        // return contact
-        return contact;
-    }
+//    public Person getContact(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID, KEY_NAME, KEY_EMAIL}, KEY_ID
+//                + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+//
+//        if (cursor != null) {
+//            cursor.moveToFirst();
+//        }
+//
+//        Person contact = new Person(Integer.parseInt(cursor.getString(0)),
+//                cursor.getString(1), cursor.getString(2));
+//
+//        // return contact
+//        return contact;
+//    }
 
     // get all person
     public List<Person> getAllContacts() {
-        List<Person> contactList = new ArrayList<Person>();
+        List<Person> contactList = new ArrayList<>();
         // select all query
         String selectQuery = "SELECT * FROM " + TABLE_CONTACTS;
 
@@ -81,20 +83,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Person person = new Person();
-                person.setId(Integer.parseInt(cursor.getString(0)));
+                person.setId(cursor.getInt(0));
                 person.setName(cursor.getString(1));
                 person.setEmail(cursor.getString(2));
                 //add to list
                 contactList.add(person);
-            }
+            } while (cursor.moveToNext());
         }
         return contactList;
     }
 
     // delete single contact
-    public void deleteContact(Person person) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?", new String[]{String.valueOf(person.getId())});
-        db.close();
-    }
+//    public void deleteContact(Person person) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.delete(TABLE_CONTACTS, KEY_ID + " = ?", new String[]{String.valueOf(person.getId())});
+//        db.close();
+//    }
 }
