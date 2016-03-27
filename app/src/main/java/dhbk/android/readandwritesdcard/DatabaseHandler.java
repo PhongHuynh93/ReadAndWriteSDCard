@@ -1,5 +1,6 @@
 package dhbk.android.readandwritesdcard;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,5 +32,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
         onCreate(db);
+    }
+
+    // add new person
+    public void addContact(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, person.getName());
+        values.put(KEY_EMAIL, person.getEmail());
+
+        // insert row
+        db.insert(TABLE_CONTACTS, null, values);
+        db.close();
     }
 }
