@@ -8,40 +8,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
-
-    Button btnRead , btnSave;
-    EditText txtInput;
-    TextView txtContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        txtContent = (TextView) findViewById(R.id.txtContent);
-        txtInput = (EditText) findViewById(R.id.txtInput);
-
-        btnRead = (Button) findViewById(R.id.btnRead);
-        btnRead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtContent.setText(FileHelper.ReadFile(MainActivity.this));
-            }
-        });
-
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (FileHelper.saveToFile( txtInput.getText().toString())){
-                    Toast.makeText(MainActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(MainActivity.this,"Error save file!!!",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
 
+    public void saveData(View view) throws IOException {
+        EditText name = (EditText) findViewById(R.id.txtname);
+        EditText pwd = (EditText) findViewById(R.id.txtemail);
+
+        File myDir = new File("/sdcard/postion");
+        myDir.mkdirs();
+        FileWriter out = new FileWriter(new File(myDir, "saved.txt"), true);
+
+        out.write(name.getText().toString() + "\n");
+        out.write(pwd.getText().toString() + "\n");
+        out.close();
+    }
+
+    public void readData(View view) {
+    }
 }
