@@ -18,6 +18,7 @@ import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
+    private DatabaseHandler db = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,5 +65,9 @@ public class MainActivity extends AppCompatActivity {
     public void showDatabase(View view) {
         Intent intent = new Intent(this, PersonActivity.class);
         startActivity(intent);
+    }
+
+    private void saveToDB(String name, String email) {
+        db.addContact(new Person(name, email));
     }
 }
